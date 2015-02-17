@@ -1,0 +1,161 @@
+@font-face{
+	font-family: custom;
+	src:url('/Fonts/Kalinga.ttf');
+}
+@font-face{
+	font-family: impact;
+	src:url('/Fonts/Impact.ttf');
+}
+html {
+	background: #2f3131;
+	color: white;
+}
+a, p {
+	text-decoration: none;
+	color: white;
+	margin:0;
+}
+.mainWrapper{
+	padding: 10px;
+}
+#navBar a{
+	margin-right: 10px;
+}
+#about{
+	font-family: 'Josefin Slab', serif;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	border-top: 2px solid #5ef9ff;
+	color:#d5d5d5;
+	margin-top:10px;
+	padding-top:10px;
+	margin-bottom: 20px;
+}
+#about b{
+	font-size: 1.2em;
+}
+.boxName{
+	width: 100%;
+	height: 21vh;
+	border:6px solid white;
+	cursor: pointer;
+}
+.mobile-only .item{
+	margin-bottom: 25px;
+}
+.mobile-only .item h1{
+	margin: 0;
+	font-size: 1.2em;
+}
+.mobile-only .item p{
+	margin: 15px 0;
+}
+.mobile-only .item a{
+	color:#5ef9ff;
+}
+.desktop-only{
+	display: none;
+}
+input{
+	margin: 10px 0;
+	width: 96%;
+	height: 1.8em;
+}
+textarea{
+	margin: 10px 0;
+	width: 96%;
+	height: 15vh;
+}
+input[type='button']{
+	border-style: none;
+}
+.name{
+	font-size: 1.5em;
+	margin-bottom: 10px;
+}
+@media only screen and (min-width: 768px){
+	.mobile-only{
+		display: none;
+	}
+	.desktop-only{
+		display: inherit;
+	}
+	.mainWrapper{
+		width: 70%;
+		margin: 9% auto 0;
+	} 
+	.leftCol, .rightCol , .boxName , .item h2 {
+		display: inline-block;
+		vertical-align: top;
+	}
+	.leftCol{
+		width: 20%;
+	}
+	.leftCol a{
+		font-size: 2.7em;
+		font-family: custom;
+	}
+	#navBar a{
+		margin:0;
+	}
+	#about{
+		font-size: 1.4em;
+		line-height: 1.8em;
+		border-top: 2px solid #5ef9ff;
+		padding: 9% 6% 0 0;
+		margin-top: 5%;
+	}
+	#about b{
+		font-size: 1.405em;
+	}
+	.rightCol{
+		float:right;
+		width: 65%;
+	}
+	
+	.boxName{
+		width: 35%;
+		height: 21vh;
+		border:6px solid white;
+		cursor: pointer;
+	}
+	.boxName h1{
+		text-align: center;
+		line-height: 21vh;
+		font-family: impact;
+		font-weight: 300;
+		margin: 0;
+		font-size: 2.5em;
+	}
+	.item{
+		margin-bottom: 10%;
+	}
+	.item h2 {
+		width: 51%;
+		font-family: impact;
+		font-size: 2.2em;
+		line-height: 1.5em;
+		font-weight: 300;
+		margin: 0;
+		display: none;
+	}
+	.right {
+		float: right;
+	}
+	.show{
+		display: inline-block !important;
+	}	
+	input{
+		margin: 10px 0;
+		width: 40%;
+		height: 1.8em;
+	}
+	textarea{
+		margin: 10px 0;
+		width: 40%;
+		height: 15vh;
+	}
+	input[type='button']{
+		border-style: none;
+	}
+}
