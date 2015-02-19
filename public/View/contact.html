@@ -1,15 +1,20 @@
-
-<p class='name'><b >Ryan Huynh</b></p>
-<p>13202 Stanrich Pl</p>
-<p>Garden Grove, CA 92843</p>
-<p>(714) 300-4202</p>
-<p><b>chienhhuynh@gmail.com</b></p><br >
-<p>If you have a great idea that you want to turn into reality, we can work together.</p><br >
-
-<form>
-	<p>Your name</p>
-	<input type='text' ><br >
-	<p>Message</p>
-	<textarea></textarea> <br >
-	<input type='button' value='Submit'>
+<form id='contactForm' name='contactForm'>
+	<p style='margin-top:0'>If you have a great idea that you want to turn into reality, let's work together.</p>
+	<p>Your name:</p>
+	<input type='text' name='name' ng-model='Contact.name' required>
+	<span class='errorMsg' ng-show="contactForm.name.$dirty && contactForm.name.$invalid">
+		<span ng-show="contactForm.$error.required">Name is required.</span>
+	</span>
+	<p>Your email: </p>
+	<input type='email' name='email' ng-model='Contact.email' required>
+	<span class='errorMsg' ng-show="contactForm.email.$dirty && contactForm.email.$invalid">
+		<span ng-show="contactForm.email.$error.required">Email is required.</span>
+		<span ng-show="contactForm.email.$error.email">Email is invalid.</span>
+	</span>
+	<p>Message:</p>
+	<textarea ng-model='Contact.message' name='msg' required></textarea> <br >
+	<div class='errorMsg' ng-show="contactForm.msg.$dirty && contactForm.msg.$invalid">
+		<span ng-show="contactForm.$error.required">Message is required.</span>
+	</div>
+	<input type='button' ng-disabled='contactForm.$invalid' value='Submit' ng-click='submit()'>
 </form>

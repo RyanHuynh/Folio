@@ -14,9 +14,12 @@ a, p {
 	text-decoration: none;
 	color: white;
 	margin:0;
+	font-family: 'Josefin Slab', serif;
+	font-size: 1.2em;
 }
 .mainWrapper{
-	padding: 10px;
+	margin: 10px 10px 50px;
+	position: relative;
 }
 #navBar a{
 	margin-right: 10px;
@@ -33,6 +36,10 @@ a, p {
 }
 #about b{
 	font-size: 1.2em;
+	font-family: 'Lobster', cursive;
+}
+.rightCol{
+	width: 100%;
 }
 .boxName{
 	width: 100%;
@@ -56,15 +63,18 @@ a, p {
 .desktop-only{
 	display: none;
 }
+#contactForm p{
+	margin-top: 20px;
+}
 input{
-	margin: 10px 0;
+	margin: 5px 0;
 	width: 96%;
 	height: 1.8em;
 }
 textarea{
-	margin: 10px 0;
+	margin: 5px 0;
 	width: 96%;
-	height: 15vh;
+	height: 13em;
 }
 input[type='button']{
 	border-style: none;
@@ -73,16 +83,65 @@ input[type='button']{
 	font-size: 1.5em;
 	margin-bottom: 10px;
 }
-@media only screen and (min-width: 768px){
+.folioWrapper.ng-enter{
+	animation-name: fadeInUpBig;
+	-webkit-animation-name: fadeInUpBig;
+	position: absolute;
+}
+
+.folioWrapper.ng-leave-active{
+	animation-name: fadeOutDownBig;
+	-webkit-animation-name: fadeOutDownBig;
+	position: absolute;
+}
+
+.contactWrapper.ng-enter{
+	animation-name: fadeInUpBig;
+	-webkit-animation-name: fadeInUpBig;
+	position: absolute;
+}
+
+.contactWrapper.ng-leave-active{
+	animation-name: fadeOutDownBig;
+	-webkit-animation-name: fadeOutDownBig;
+	position: absolute;
+}
+
+input[type='button']{
+	border-style: none;
+	padding:8px;
+	background:  #27A3A8;
+	color: white;
+	width: 150px;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	height: auto;
+	cursor: pointer;
+	transition: 0.5s;
+	-webkit-transition: 0.5s;
+	outline: none;
+}
+.errorMsg{
+	color: red;
+}
+#popup{
+	text-align: center;
+	padding:50px 10px;
+}
+#popup p{
+	color: black;
+}
+@media only screen and (min-width: 768px) and (orientation: landscape){
 	.mobile-only{
 		display: none;
 	}
 	.desktop-only{
-		display: inherit;
+		display: block;
 	}
 	.mainWrapper{
 		width: 70%;
-		margin: 9% auto 0;
+		margin: 11% auto 0;
+		padding: 0;
 	} 
 	.leftCol, .rightCol , .boxName , .item h2 {
 		display: inline-block;
@@ -90,31 +149,32 @@ input[type='button']{
 	}
 	.leftCol{
 		width: 20%;
+		margin-right: 13%;
+		margin-top: 4%;
 	}
 	.leftCol a{
-		font-size: 2.7em;
+		font-size: 2em;
 		font-family: custom;
 	}
 	#navBar a{
 		margin:0;
 	}
 	#about{
-		font-size: 1.4em;
-		line-height: 1.8em;
+		font-size: 1.2em;
+		line-height: 1.5em;
 		border-top: 2px solid #5ef9ff;
 		padding: 9% 6% 0 0;
 		margin-top: 5%;
 	}
 	#about b{
-		font-size: 1.405em;
+		font-size: 1.3em;
 	}
 	.rightCol{
-		float:right;
 		width: 65%;
 	}
 	
 	.boxName{
-		width: 35%;
+		width: 40%;
 		height: 21vh;
 		border:6px solid white;
 		cursor: pointer;
@@ -125,7 +185,7 @@ input[type='button']{
 		font-family: impact;
 		font-weight: 300;
 		margin: 0;
-		font-size: 2.5em;
+		font-size: 2em;
 	}
 	.item{
 		margin-bottom: 10%;
@@ -133,9 +193,9 @@ input[type='button']{
 	.item h2 {
 		width: 51%;
 		font-family: impact;
-		font-size: 2.2em;
+		font-size: 1.5em;
 		line-height: 1.5em;
-		font-weight: 300;
+		font-weight: 200;
 		margin: 0;
 		display: none;
 	}
@@ -145,17 +205,49 @@ input[type='button']{
 	.show{
 		display: inline-block !important;
 	}	
-	input{
-		margin: 10px 0;
+	#info, #contactForm{
+		display: inline-block;
+		vertical-align: top;
+	}
+	#info{
 		width: 40%;
+		float: right;
+		text-align: right;
+	}
+	#contactForm{
+		width: 55%;
+		margin-left:10%;
+	}
+	#contactForm p{
+		margin-top: 20px;
+	}
+	input{
 		height: 1.8em;
 	}
 	textarea{
-		margin: 10px 0;
-		width: 40%;
-		height: 15vh;
+		height: 11em;
 	}
-	input[type='button']{
-		border-style: none;
+	
+	input[type='button']:hover{
+		background: #38EEF5;
 	}
 }
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+	.mainWrapper{
+		width: 85%;
+	}
+	.boxName h1{
+		font-size: 1.5em;
+	}
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
+	.mainWrapper{
+		margin: 25px 25px 50px;
+	}
+}
+
+
+
+
+
+
