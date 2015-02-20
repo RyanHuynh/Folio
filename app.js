@@ -24,8 +24,8 @@ var ThemeSchema = new Schema({
 var smtpTransport = mailer.createTransport("SMTP",{
    service: "Gmail",  // sets automatically host, port and connection security settings
    auth: {
-       user: 
-       pass: 
+       user: "sdsds",
+       pass: "sdsds"
    }
 });
 
