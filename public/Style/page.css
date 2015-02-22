@@ -101,15 +101,13 @@ a, p {
 	font-size: 1.2em;
 	display: block;
 }
-body{
-	overflow: hidden;
-}
 .mainWrapper{
 	margin: 10px 10px 50px;
 	position: relative;
 }
 #navBar a{
 	margin-right: 10px;
+	display: inline-block;
 }
 #about{
 	font-family: 'Josefin Slab', serif;
@@ -162,6 +160,10 @@ textarea{
 	margin: 5px 0;
 	width: 96%;
 	height: 13em;
+	padding:0.5em;
+}
+input, textarea{
+	border-radius: 0;
 }
 input[type='button']{
 	border-style: none;
@@ -195,7 +197,8 @@ input[type='button']{
 }
 
 input[type='button']{
-	border-style: none;
+	-webkit-appearance: none;
+	border-radius: 0;
 	padding:8px;
 	background:  #27A3A8;
 	color: white;
@@ -219,6 +222,9 @@ input[type='button']{
 	color: black;
 }
 @media only screen and (min-width: 768px) and (orientation: landscape){
+	body{
+		overflow: hidden;
+	}
 	.mobile-only{
 		display: none;
 	}
@@ -239,12 +245,10 @@ input[type='button']{
 		margin-right: 13%;
 		margin-top: 4%;
 	}
-	.leftCol a{
-		font-size: 2em;
-		font-family: custom;
-	}
 	#navBar a{
 		margin:0;
+		font-size: 2em;
+		font-family: custom;
 	}
 	#about{
 		font-size: 1.2em;
@@ -320,11 +324,31 @@ input[type='button']{
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+	a,p{
+		font-size: 1em;
+	}
 	.mainWrapper{
 		width: 85%;
 	}
 	.boxName h1{
+		font-size: 1.3em;
+	}
+	#navBar a{	
 		font-size: 1.5em;
+	}
+	#about{
+		font-size: 1em;
+	}
+	.item h2{
+		font-size: 1.1em;
+		line-height: 1.3em;
+	}
+	#contactForm p {
+		margin-top: 10px;
+	}
+	input[type='button']{
+		font-size: 1em;
+		width: 120px;
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
