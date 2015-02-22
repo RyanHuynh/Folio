@@ -32,7 +32,7 @@ app.controller('mainCtrl', function($scope,$compile,$http, GameControlService, G
 
                 //Attach new game to game box.
                 var gameBox = angular.element(document.querySelector("div[id='gameBox']"));
-                var newDeck = angular.element("<card ng-repeat='card in currentDeck' class='squareBox' data='card' index='{{ $index }}' />");
+                var newDeck = angular.element("<card ng-repeat='card in currentDeck' class='squareBox fadeIn animated' data='card' index='{{ $index }}' />");
 
                 _cardChildScope = $scope.$new();
                 gameBox.append($compile(newDeck)(_cardChildScope));
