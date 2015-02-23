@@ -4,11 +4,16 @@
 	<head>
 		<meta name="viewport" content="width=device-width" />
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.9/angular.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="Style/style.css" >
 		<link rel="stylesheet" type="text/css" href="Style/animate.css" >
+		<link rel="stylesheet" type="text/css" href="Style/ngDialog-theme-default.css" >
+		<link rel="stylesheet" type="text/css" href="Style/ngDialog.css" >
+		<link rel="stylesheet" type="text/css" href="Style/style.css" >
 		<script src="Scripts/Main.js"></script>
+		<script src="Scripts/ngDialog.js"></script>
 		<script src="Scripts/NoteModel.js"></script>
+		<script src="Scripts/SettingService.js"></script>
 		<script src="Scripts/ChordService.js"></script>
+		<script src="Scripts/ScaleService.js"></script>
 		<script src="Scripts/NameNoteService.js"></script>	
 		<script src="Scripts/GameControlService.js"></script>		
 	</head>
@@ -19,9 +24,19 @@
 				<div id="answerBox" ></div>
 			</div>
 			<div id="respondBox">
+				<div id="setting" ng-click='openSetting()'></div>
 				<div id="nextQuestion" ng-click='nextQuestion()' class='customBounce' ng-show='nextQuestionSwitch'></div>
 			</div>
 		</div>
 		<footer><small>Designed and created by Ryan Huynh. Copyright &copy; 2015.</small></footer>
 	</body>
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-59832613-1', 'auto');
+		ga('send', 'pageview');
+	</script>
 </html>

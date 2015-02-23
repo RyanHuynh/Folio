@@ -1,9 +1,9 @@
-var app = angular.module('myApp', []);
+var app = angular.module('myApp', ['ngDialog']);
 
 /****************************************
  *			 MAIN CONTROLLER 		   	*
  ****************************************/
-app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, ChordService, GameControlService){
+app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNoteService, ChordService, ScaleService, GameControlService, SettingService){
 	
 	var _category = "Note";
 	$scope.nextQuestionSwitch = false;
@@ -77,6 +77,33 @@ app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, C
 		$compile(answerBox)($scope);
 	};
 
+	//Routine run for "Chord" game mode.
+	var ScaleRun = function(){
+		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
+		
+		//Get clef used.
+		var clefUsed = GameControlService.getClefUsed();
+		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
+
+		//Get question
+		var notes = ScaleService.getQuestion();
+		for(i =0; i < notes.length; i++){
+			var note = notes[i];
+			questionBox.append($compile(note)($scope));
+		}
+
+		//Get answers for the question.
+		var answerSet = ScaleService.getAnswerSet();
+		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
+		answerBox.children().remove();
+		
+		for(i = 0; i < answerSet.length; i++){
+			var answer = answerSet[i];
+			answerBox.append(answer);
+		}
+		$compile(answerBox)($scope);
+	};
+
 	//Construct new question.
 	$scope.nextQuestion = function(){
 		$scope.nextQuestionSwitch  = false;
@@ -84,26 +111,28 @@ app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, C
 		//Clear out the question box.
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		questionBox.children().remove();
-
 		GameControlService.gameStart();
+
 		//Random game mode for now.
-		var temp = ["Note", "Chord"];
-		_category = temp[Math.floor(Math.random() * 2)];
+		var questionType = SettingService.getQuestionType();
+		_category = questionType[Math.floor(Math.random() * questionType.length)];
 		if(_category == "Note")
 			NameNoteRun();
-		else
+		else if(_category == "Chord")
 			ChordRun();
+		else
+			ScaleRun();
 
 		//Add question text.
 		questionBox.append(GameControlService.getQuestionText(_category));
-
 	};
 
-	//Switch to new category.
-	$scope.switchCategory = function(newCat){
-		_category = newCat;
-		$scope.next();
-	};
+	//Open setting menu.
+	$scope.openSetting = function(){
+		ngDialog.open({
+			template : 'setting.html',
+			className: 'ngdialog-theme-default'});
+	}
 
 	//Recompile size when orientation change.
 	angular.element($window).bind('orientationchange', function(){
@@ -113,9 +142,39 @@ app.controller('mainCtrl', function($window, $scope,$compile, NameNoteService, C
 		$compile(questionBox)($scope);
 	});
 
+	//Listen for setting change.
+	$scope.$on('settingApplied', function(){
+		ngDialog.close();
+		$scope.nextQuestion();
+	});
+
 	$scope.nextQuestion();
 });
+app.controller('settingCtrl', function($rootScope, $scope, SettingService){
+	//Load setting back.
+	//Question type.
+	$scope.noteType = SettingService.isNoteType();
+	$scope.chordType = SettingService.isChordType();
+	$scope.scaleType = SettingService.isScaleType();
 
+	//Chord Setting
+	$scope.inversionChord = SettingService.isChordInverted();
+
+	//Apply setting
+	$scope.applySetting = function(){
+		SettingService.saveQuestionType($scope.noteType, $scope.chordType, $scope.scaleType);
+		SettingService.saveChordSetting($scope.inversionChord);
+		$rootScope.$broadcast('settingApplied');
+	};
+
+	//Reset to default
+	$scope.defaultSetting = function(){
+		$scope.noteType = true;
+		$scope.chordType = true;
+		$scope.scaleType = true;
+		$scope.inversionChord = true;
+	};
+});
 /****************************************
  *		  UI ELEMENT DIRECTIVES 	   	*
  ****************************************/

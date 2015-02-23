@@ -28,6 +28,7 @@ time, mark, audio, video {
     vertical-align:baseline;
     background:transparent;
     list-style: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
 html {
     line-height:1;
@@ -182,9 +183,10 @@ answer{
 	display: inline-block;
 	background: no-repeat;
 	background-size: 100% 100%;
-	width: 100%;
+	width: 20%;
 	margin-right: 4.5%;
 	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
 answer:last-child{
 	margin-right: 0;
@@ -192,29 +194,43 @@ answer:last-child{
 }
 #respondBox *{
 	position: absolute;
-	width: 36%;
-	height:19%;
 }
 respond{
 	background-size: 100% 100%;
-	top:53%;
-	left:12%;
+	top:56%;
+	left:14%;
+	width: 30%;
+	height:8%;
+}
+#setting{
+	background: url('../img/Misc/setting.png');
+	background-size: 100% 100%;
+	width: 24%;
+	height:7%;
+	top:77%;
+	left:68%;
+	cursor: pointer;
+	z-index: 500;
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
 #nextQuestion{
 	background: url('../img/Misc/nextText.png');
 	background-size: 100% 100%;
-	top:58%;
+	width: 24%;
+	height:7%;
+	top:53%;
 	left:58%;
 	cursor: pointer;
+	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
 .customBounce{
-		-webkit-animation-duration: 6s;
-      	animation-duration: 6s;
-     	-webkit-animation-name: cBounce;
-      	animation-name: cBounce;
-      	-webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
-    	animation-iteration-count: infinite;
-	}
+	-webkit-animation-duration: 6s;
+  	animation-duration: 6s;
+ 	-webkit-animation-name: cBounce;
+  	animation-name: cBounce;
+  	-webkit-animation-iteration-count: infinite; /* Chrome, Safari, Opera */
+	animation-iteration-count: infinite;
+}
 
 @-webkit-keyframes cBounce {
 	0%, 3.3%, 6.6%, 9.9% , 13.2% 16.5% {
@@ -290,6 +306,65 @@ respond{
 	        transform: scale3d(1, 1, 1);
 	}
 }
+#settingBox{
+	height: 50vh;
+}
+#settingBox h1{
+	text-align: center;
+	margin-bottom: 5%;
+	font-size: 2em;
+}
+#settingBtn{
+	position: absolute;
+	bottom: 1em;
+	margin-top:5%;
+	width: 100%;
+}
+#settingBtn input{
+	display: inline-block;
+	cursor: pointer;
+	transition:0.5s;
+	-moz-transition:0.5s;
+	-webkit-transition:0.5s;
+	height: 36px;
+	color:gray;
+	border: 2px solid gray;
+	background: none;
+	border-radius: 5px;
+	font-size: 0.8em;
+}
+#settingBtn input:focus{
+	outline: 0;
+}
+#applyBtn{
+	width: 35%;
+}
+#defaultBtn{
+	width: 50%;
+	margin-right: 3%;
+}
+#applyBtn:hover{
+	color:#63B6FF;
+	border: 2px solid #63B6FF;
+}
+#defaultBtn:hover{
+	color:#FFBF29;
+	border: 2px solid #FFBF29;
+}
+input[type="checkbox"] {
+    display:none;
+}
+input[type="checkbox"] + label span {
+    display:inline-block;
+    width:20px;
+    height:20px;
+    border:2px solid black;
+    margin-right:10px;
+}
+input[type="checkbox"]:checked + label span {
+	background:url('/img/Misc/chkbox.png');
+	background-size: 100% 100%;
+}
 /******************/
 @media only screen and (min-width: 768px) and (orientation: landscape){
 	html{
@@ -312,36 +387,54 @@ respond{
 		font-size: 5em;
 	}
 	answer{
-	
 		margin-right: 8%;
 		cursor: pointer;
 	}
-
-	#respondBox *{
-		position: absolute;
-		width: 15%;
-		height:30%;
-	}
 	respond{
 		background-size: 100% 100%;
-		top:31%;
-		left:63%;
+		top:43%;
+		left:64%;
+		width: 12%;
+		height:12%;
+	}
+	#setting{
+		top: 29%;
+		left: 70%;
+		width: 10%;
+		height:10%;
 	}
 	#nextQuestion{
-		background: url('../img/Misc/nextText.png');
-		background-size: 100% 100%;
-		top:39%;
-		left:82%;
-		cursor: pointer;
+		top:49%;
+		left:86%;
+		width: 9%;
+		height:11%;
 	}
 	small{
-	font-size: 0.8em;
-	line-height: 0.8em;
+		font-size: 0.8em;
+		line-height: 0.8em;
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape){
+	.mainWrapper{
+		margin-top:50px;
+	}
 	#questionBox p{
 		font-size: 3em;
+	}
+	.ngdialog.ngdialog-theme-default{
+		padding: 100px 0 100px 0;
+	}
+	.ngdialog.ngdialog-theme-default .ngdialog-content{
+		width: 250px;
+		padding:0.8em;
+		font-size: 1em;
+	}
+	#settingBtn input{
+		height: 30px;
+		border-radius: 3px;
+	}
+	#settingBox h1{
+		font-size: 1.5em;
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
@@ -350,6 +443,27 @@ respond{
 	}
 	#questionBox p{
 		font-size: 5em;
+	}
+	#answerBox{
+		width: 75%;
+	}
+	answer{
+		width: 22%;
+	}
+	#setting{
+		height: 8%;
+		width: 20%;
+	}
+	#nextQuestion{
+		width: 15%;
+		height: 7%;
+		top:62%;
+		left: 65%;
+	}
+	respond{
+		width: 20%;
+		top:62%;
+		left:22%;
 	}
 }
 
