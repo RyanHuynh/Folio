@@ -5,11 +5,11 @@ app.controller('mainCtrl', function($scope){
 app.config(['$routeProvider', function($routeProvider){
 	$routeProvider
 		.when('/folio', {
-			templateUrl: 'View/folio.html',
+			templateUrl: 'Views/folio.html',
 			controller: 'folioCtrl'
 		})
 		.when('/contact', {
-			templateUrl: 'View/contact.html',
+			templateUrl: 'Views/contact.html',
 			controller: 'contactCtrl'
 		})
 		.otherwise({
@@ -29,7 +29,7 @@ app.controller('contactCtrl', function($http, $scope, ngDialog){
 		
 		$http.post('/api/submitMsg', data).success(function(data, status, headers, config){
 			ngDialog.open({
-			template : 'popup.html',
+			template : 'Views/popup.html',
 			className: 'ngdialog-theme-default'});
 		});
 	}

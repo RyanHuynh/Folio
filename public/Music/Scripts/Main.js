@@ -25,10 +25,6 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 	//Routine run for "Note" game mode.
 	var NameNoteRun = function(){
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
-	
-		//Get clef used.
-		var clefUsed = GameControlService.getClefUsed();
-		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
 
 		//Get key signature used.
 		var key = GameControlService.getKeyUsed();
@@ -53,10 +49,6 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 	var ChordRun = function(){
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		
-		//Get clef used.
-		var clefUsed = GameControlService.getClefUsed();
-		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
-
 		//Get key signature used.
 		var key = GameControlService.getKeyUsed();
 		questionBox.append($compile(key)($scope));
@@ -84,10 +76,6 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 	var ScaleRun = function(){
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		
-		//Get clef used.
-		var clefUsed = GameControlService.getClefUsed();
-		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
-
 		//Get question
 		var notes = ScaleService.getQuestion();
 		for(i =0; i < notes.length; i++){
@@ -122,6 +110,10 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		//Reset game state and start new one.
 		GameControlService.gameStart(category);
 
+		//Get clef used.
+		var clefUsed = GameControlService.getClefUsed();
+		questionBox.css('background-image', 'url(Resources/Img/Clef/' + clefUsed + '.jpg)' );
+
 		//Pick a question for question type.
 		if(category == "Note")
 			NameNoteRun();
@@ -137,8 +129,8 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 	//Open setting menu.
 	$scope.openSetting = function(){
 		ngDialog.open({
-			template : 'setting.html',
-			className: 'ngdialog-theme-default'});
+			template : 'Views/setting.html',
+			className: 'ngdialog-theme-default setting-layout'});
 	}
 
 	//Recompile size when orientation change.
@@ -158,7 +150,7 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 	//Open feedback tab.
 	$scope.openFeedback = function(){
 		ngDialog.open({
-			template : 'feedback.html',
+			template : 'Views/feedback.html',
 			className: 'ngdialog-theme-default feedback',
 			controller: 'feedbackCtrl'});
 	}
@@ -236,7 +228,7 @@ app.directive('accidential', function(){
 			type : '@'
 		},
 		link : function(scope, element){
-			element.css('background-image', 'url(img/Accidential/' + scope.type + '.png)');
+			element.css('background-image', 'url(Resources/Img/Accidential/' + scope.type + '.png)');
 		}
 	}
 })
@@ -244,7 +236,7 @@ app.directive('accidential', function(){
 app.directive('answer', function(GameControlService){
 	return {
 		link : function(scope, element, attrs){
-			element.css('background-image', 'url(img/Answer/' + attrs.type + "/" + attrs.value + '.png)');
+			element.css('background-image', 'url(Resources/Img/Answer/' + attrs.type + "/" + attrs.value + '.png)');
 			element.bind('click', function(){
 				GameControlService.isCorrectAnswer(attrs.value);	
 				scope.checkRespond();
@@ -262,10 +254,10 @@ app.directive('respond', function($window){
 		controller: function($scope){
 			var randomRespondIndex = Math.floor(Math.random() * 4 + 1);
 			if($scope.type == "R"){
-				$scope.bkground = 'url(img/Respond/Correct/' + randomRespondIndex + '.png)';
+				$scope.bkground = 'url(Resources/Img/Respond/Correct/' + randomRespondIndex + '.png)';
 			}
 			else
-				$scope.bkground = 'url(img/Respond/Wrong/' + randomRespondIndex + '.png)';
+				$scope.bkground = 'url(Resources/Img/Respond/Wrong/' + randomRespondIndex + '.png)';
 		},
 		template : '{{ display }}',
 		link : function(scope, element){
@@ -283,7 +275,7 @@ app.directive('key', function(){
 		link: function(scope, element){
 			if(scope.clef == "F")
 				element.css('top', '5%');
-			element.css('background-image', 'url(img/Key/' + scope.value + '.png)');
+			element.css('background-image', 'url(Resources/Img/Key/' + scope.value + '.png)');
 		}
 	}
 });

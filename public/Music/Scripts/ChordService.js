@@ -11,7 +11,7 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 	
 	//Default value/setting.
 	var _xDistanceBetweenNote = 17;
-	var _firstNoteXCoord = 30;
+	var _firstNoteXCoord = 40;
 	var _firstNoteLowestInterval = 59;
 	var _correctAnswerIndex = "";
 	

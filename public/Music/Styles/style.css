@@ -1,6 +1,6 @@
 @font-face{
 	font-family: chalk;
-    src: url(../chalk.ttf);
+    src: url(../Resources/Fonts/chalk.ttf);
 }
 
 /**
@@ -32,7 +32,7 @@ time, mark, audio, video {
 }
 html {
     line-height:1;
-    background: url('../img/Misc/phonebg.jpg') no-repeat;
+    background: url('../Resources/Img/Misc/phonebg.jpg') no-repeat;
     background-size: 100% 100%;
     height: 100%;
 }
@@ -176,7 +176,7 @@ accidential {
 	position: absolute;
 	width: 11%;
 	height: 20%;
-	background: url('../img/Misc/line.png') no-repeat;
+	background: url('../Resources/Img/Misc/line.png') no-repeat;
 	background-size: 100% 100%;
 }
 answer{
@@ -203,7 +203,7 @@ respond{
 	height:8%;
 }
 #setting{
-	background: url('../img/Misc/setting.png');
+	background: url('../Resources/Img/Misc/setting.png');
 	background-size: 100% 100%;
 	width: 27%;
 	height:8%;
@@ -214,7 +214,7 @@ respond{
 	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
 #nextQuestion{
-	background: url('../img/Misc/nextText.png');
+	background: url('../Resources/Img/Misc/nextText.png');
 	background-size: 100% 100%;
 	width: 24%;
 	height:7%;
@@ -307,7 +307,7 @@ respond{
 	}
 }
 #settingBox{
-	height: 55vh;
+	height: 380px;
 	position: relative;
 	font-size: 0.9em;
 }
@@ -363,7 +363,7 @@ input[type="checkbox"] + label span {
     margin-right:10px;
 }
 input[type="checkbox"]:checked + label span {
-	background:url('../img/Misc/chkbox.png');
+	background:url('../Resources/Img/Misc/chkbox.png');
 	background-size: 100% 100%;
 }
 label{
@@ -376,7 +376,7 @@ label{
 /******************/
 @media only screen and (min-width: 768px) and (orientation: landscape){
 	html{
-		 background: url('../img/Misc/desktopbg.jpg') no-repeat;
+		 background: url('../Resources/Img/Misc/desktopbg.jpg') no-repeat;
 		 background-size: 100% 100%;
 	}
 	.mainWrapper{
@@ -430,13 +430,14 @@ label{
 	#questionBox p{
 		font-size: 3em;
 	}
-	.ngdialog.ngdialog-theme-default{
-		padding: 100px 0 100px 0;
+	respond{
+		height: 10%;
 	}
-	.ngdialog.ngdialog-theme-default .ngdialog-content{
-		width: 250px;
-		padding:0.8em;
-		font-size: 1em;
+	#nextQuestion{
+		height: 9%;
+	}
+	#setting{
+		width: 13%;
 	}
 	#settingBtn input{
 		height: 30px;
@@ -444,6 +445,14 @@ label{
 	}
 	#settingBox h1{
 		font-size: 1.5em;
+	}
+	.ngdialog.ngdialog-theme-default.setting-layout {
+		padding: 20px 0;
+	}
+	.ngdialog.ngdialog-theme-default.setting-layout .ngdialog-content{
+		width: 300px;
+		padding:20px;
+		font-size: 0.8em;
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait){
@@ -473,6 +482,9 @@ label{
 		width: 20%;
 		top:62%;
 		left:22%;
+	}
+	.ngdialog.ngdialog-theme-default.setting-layout {
+		padding: 160px 0;
 	}
 }
 
