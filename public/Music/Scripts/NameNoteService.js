@@ -5,10 +5,9 @@ app.service('NameNoteService', function(NoteModel, GameControlService){
 	 *				 VARIABLES		    	*
 	 ****************************************/
 
-	var _noteNameList = ["C", "Cs", "Db", "D", "Ds", "Eb", "E", "F", "Fs", "Gb", "G", "Gs", "Ab", "A", "As", "B", "Bb"];
-	var clefUsed = "";
-	var keyUsed = "";
+	var _noteNameList = ["Cb", "C", "Cs", "Db", "D", "Ds", "Eb", "E", "Es", "Fb", "F", "Fs", "Gb", "G", "Gs", "Ab", "A", "As", "B", "Bb","Bs"];
 	var _correctAnswerIndex = "";
+	var _defaultXCoord = 50;
 	
 	/****************************************
 	 *			COMMON FUNCTIONS		   	*
@@ -16,39 +15,43 @@ app.service('NameNoteService', function(NoteModel, GameControlService){
 
 	//Get a random question.
 	this.getQuestion = function(){
-		var randomIndex = Math.floor(Math.random() * _noteNameList.length);
-		var noteName = _noteNameList[randomIndex];
-		var choosenNote = NoteModel.getNoteWithName(noteName);
 
-		//Choose Clef
-		clefUsed = GameControlService.getClefUsed();
-		var choosenNoteArray = "";
+		//Get clef used.
+		var clefUsed = GameControlService.getClefUsed();
+
+		//Get key signature.
+		var keyName = GameControlService.getKeyNameUsed();
+
+		//Get random note.
+		var noteArray = NoteModel.getNotesInKey(keyName);
+		var randomIndex = Math.floor(Math.random() * noteArray.length);
+		var randomNoteName = noteArray[randomIndex];
+		var choosenNote = NoteModel.getNoteWithName(randomNoteName);
+
+		//Get Y coordination of note on clef.
 		if(clefUsed == "G"){
-			choosenNoteArray = choosenNote.CoorY.G;
+			var noteOnClefArray = choosenNote.CoorY.G;
 		}
 		else
-			choosenNoteArray = choosenNote.CoorY.F;
-		
-		//Get key signature.
-		var randomKeyIndex = Math.floor(Math.random() * choosenNote.Key.length);
-		keyUsed = choosenNote.Key[randomKeyIndex];
+			var noteOnClefArray = choosenNote.CoorY.F;
 
-		//Get note coordination.
-		var x = '50';
-		var randomNoteIndex = Math.floor(Math.random() * choosenNoteArray.length);
-		var y = choosenNoteArray[randomNoteIndex];
-		var note = "<note x=" + x + " y=" + y + " acc='none'></note>";
+		//Construct note.
+		var randomYCoordIndex = Math.floor(Math.random() * noteOnClefArray.length);
+		var yCoord = noteOnClefArray[randomYCoordIndex];
+		var note = "<note x=" + _defaultXCoord + " y=" + yCoord + " acc='none'></note>";
 
 		//Set correct answer
-		_correctAnswerIndex = randomIndex;
-		GameControlService.setCorrectAnswer(noteName);
-		return note;
-	}
+		var correctAnswerIndex = "";
+		for(var i = 0; i < _noteNameList.length; i++){
+			if(_noteNameList[i] == randomNoteName){
+				correctAnswerIndex = i;
+				break;
+			}
+		}
+		_correctAnswerIndex = correctAnswerIndex;
+		GameControlService.setCorrectAnswer(randomNoteName);
 
-	//Return key signature used for this question.
-	this.getKey = function(){
-		var key = "<key value=" + keyUsed + " clef=" + clefUsed + " ></key>";
-		return key;
+		return note;
 	}
 
 	//Construct a random answer set.

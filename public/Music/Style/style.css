@@ -205,8 +205,8 @@ respond{
 #setting{
 	background: url('../img/Misc/setting.png');
 	background-size: 100% 100%;
-	width: 24%;
-	height:7%;
+	width: 27%;
+	height:8%;
 	top:77%;
 	left:68%;
 	cursor: pointer;
@@ -218,8 +218,8 @@ respond{
 	background-size: 100% 100%;
 	width: 24%;
 	height:7%;
-	top:53%;
-	left:58%;
+	top:56%;
+	left:62%;
 	cursor: pointer;
 	-webkit-tap-highlight-color: rgba(0,0,0,0); 
 }
@@ -307,17 +307,18 @@ respond{
 	}
 }
 #settingBox{
-	height: 50vh;
+	height: 55vh;
+	position: relative;
+	font-size: 0.9em;
 }
 #settingBox h1{
 	text-align: center;
 	margin-bottom: 5%;
-	font-size: 2em;
+	font-size: 1.5em;
 }
 #settingBtn{
 	position: absolute;
-	bottom: 1em;
-	margin-top:5%;
+	bottom: 0;
 	width: 100%;
 }
 #settingBtn input{
@@ -337,11 +338,11 @@ respond{
 	outline: 0;
 }
 #applyBtn{
-	width: 35%;
+	width: 38%;
 }
 #defaultBtn{
-	width: 50%;
-	margin-right: 3%;
+	width: 59%;
+	margin-right: 1%;
 }
 #applyBtn:hover{
 	color:#63B6FF;
@@ -362,9 +363,16 @@ input[type="checkbox"] + label span {
     margin-right:10px;
 }
 input[type="checkbox"]:checked + label span {
-	background:url('/img/Misc/chkbox.png');
+	background:url('../img/Misc/chkbox.png');
 	background-size: 100% 100%;
 }
+label{
+	vertical-align: top;
+}
+#settingBox h2{
+	margin-top:5px;
+}
+
 /******************/
 @media only screen and (min-width: 768px) and (orientation: landscape){
 	html{
@@ -403,6 +411,7 @@ input[type="checkbox"]:checked + label span {
 		width: 10%;
 		height:10%;
 	}
+
 	#nextQuestion{
 		top:49%;
 		left:86%;

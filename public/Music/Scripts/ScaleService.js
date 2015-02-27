@@ -1,11 +1,12 @@
-app.service('ScaleService', function(NoteModel, GameControlService){
+app.service('ScaleService', function(NoteModel, GameControlService, SettingService){
 
 	/****************************************
 	 *				 VARIABLES		    	*
 	 ****************************************/
 
 	//Scale names (olny has Major and Minor Scale)
-	var _scaleNameList = ["CM","GM","DM","AM","EM","BM","FsM","DbM","AbM","EbM","BbM","FM"];
+	var _scaleNameList = ["CM","GM","DM","AM","EM","BM","FsM","DbM","AbM","EbM","BbM","FM",
+						"Cmin","Dmin","Emin","Fmin","Gmin","Amin","Bmin","Csmin","Dsmin","Fsmin","Gsmin","Asmin"];
 	
 	//Default value/setting.
 	var _xDistanceBetweenNote = 12;
@@ -31,13 +32,26 @@ app.service('ScaleService', function(NoteModel, GameControlService){
 		var clefUsed = GameControlService.getClefUsed();
 		
 		//Construct notes.
-		var noteArray = randomScale.Notes;
-		console.log(noteArray);
-		var lowestYCoord = _firstNoteLowestInterval;
-		for(var i = 0; i < noteArray.length; i++){
-			var currentNote = NoteModel.getNoteWithName(noteArray[i]);
-			var noteName = currentNote.Name;
-			var xCoord = _firstNoteXCoord + _xDistanceBetweenNote * i;
+		var noteArray = randomScale.Notes.slice();
+		
+		//Adjust lowest note's y coordinate on "random note mode" for better visual display.
+		if(SettingService.isRandomNotePos())
+			var lowestYCoord = 52;
+		else
+			var lowestYCoord = _firstNoteLowestInterval;	
+		var notePosOnBar = 0;
+		while(noteArray.length > 0){
+			//console.log(lowestYCoord);
+			if(SettingService.isRandomNotePos()){
+				var notePos = Math.floor(Math.random() * noteArray.length);
+			}
+			else
+				var notePos = 0;
+			var noteName = noteArray.splice(notePos,1);
+			var currentNote = NoteModel.getNoteWithName(noteName);
+			var xCoord = _firstNoteXCoord + _xDistanceBetweenNote * notePosOnBar;
+
+			//Picking Y Coordinate.
 			var yCoord = "";
 			var interval = 0;
 			if(clefUsed == "G"){
@@ -45,19 +59,22 @@ app.service('ScaleService', function(NoteModel, GameControlService){
 					yCoord = currentNote.CoorY.G[interval];
 					interval++;
 				}while(yCoord > lowestYCoord);
-				lowestYCoord = yCoord;
 			}
 			else{
 				do{
 					yCoord = currentNote.CoorY.F[interval];
 					interval++;
 				}while(yCoord > lowestYCoord);
+			}
+			if(!SettingService.isRandomNotePos()){
 				lowestYCoord = yCoord;
 			}
-			lowestYCoord = yCoord;
+
+
 			var accidential = currentNote.Accidential;
 			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidential + "></note>";
 			result.push(note);
+			notePosOnBar++;
 		}
 
 		//Set correct answer here

@@ -1,13 +1,18 @@
 <div id="settingBox" ng-controller='settingCtrl'>
-	<h1>SETTING</h1>
+	<h1>Setting</h1>
 	<form >
 		<h2>Question type:</h2>
 		<li><input id='noteType' type='checkbox' ng-model='noteType'><label for='noteType'><span></span>Note</label></li>
 		<li><input id='chordType' type='checkbox' ng-model='chordType'><label for='chordType'><span></span>Chord</label></li>
 		<li><input id='scaleType' type='checkbox' ng-model='scaleType'><label for='scaleType'><span></span>Scale</label></li>
 	<form>
-		<h2>Chord setting:</h2>
+		<h2>Chord question's setting:</h2>
 		<li><input id='chordInversion' type='checkbox' ng-model='inversionChord'><label for='chordInversion'><span></span>Inversion</label></li>
+		<li><input id='keyUsed' type='checkbox' ng-model='chordWithKey'><label for='keyUsed'><span></span>Use key signature</label></li>
+	</form>
+	<form>
+		<h2>Scale question's setting:</h2>
+		<li><input id='scaleOpt1' type='checkbox' ng-model='randomNotePos'><label for='scaleOpt1'><span></span>Random Note's Position</label></li>
 	</form>
 	<div id="settingBtn" >
 		<input id="defaultBtn" type='button' value='Default' ng-click='defaultSetting()'>

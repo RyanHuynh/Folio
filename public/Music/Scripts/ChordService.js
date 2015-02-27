@@ -7,14 +7,13 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 
 	//Chord names (olny has Major and Minor Chord)
 	var _chordNameList = ["CM", "CsM", "DbM", "DM", "DsM", "EbM", "EM", "FM", "FsM", "GbM", "GM", "GsM", "AbM", "AM", "AsM", "BbM", "BM",
-						"Cmin", "Csmin", "Dbmin", "Dmin", "Dsmin", "Ebmin", "Emin", "Fmin", "Fsmin", "Gbmin", "Gmin", "Abmin", "Amin", "Asmin", "Bbmin", "Bmin"];
+						"Cmin", "Csmin", "Dbmin", "Dmin", "Dsmin", "Ebmin", "Emin", "Fmin", "Fsmin", "Gbmin", "Gmin", "Gsmin", "Abmin", "Amin", "Asmin", "Bbmin", "Bmin"];
 	
 	//Default value/setting.
 	var _xDistanceBetweenNote = 17;
 	var _firstNoteXCoord = 30;
 	var _firstNoteLowestInterval = 59;
 	var _correctAnswerIndex = "";
-
 	
 	/****************************************
 	 *			COMMON FUNCTIONS		   	*
@@ -47,11 +46,20 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 		var result = [];
 
 		//Pick a random chord.
-		var randomChordIndex = Math.floor(Math.random() * _chordNameList.length);
-		var randomChordName = _chordNameList[randomChordIndex];
+		//If key is in used then.
+		var keyUsed = GameControlService.getKeyNameUsed();
+		if(SettingService.isKeyUsedinChord()){
+			var chordsWithKey = NoteModel.getChordInKey(keyUsed); 
+			var randomChordIndex = Math.floor(Math.random() * chordsWithKey.length);
+			var randomChordName = chordsWithKey[randomChordIndex];
+		}
+		else{
+			var randomChordIndex = Math.floor(Math.random() * _chordNameList.length);
+			var randomChordName = _chordNameList[randomChordIndex];
+		}
 		var randomChord = NoteModel.getChordWithName(randomChordName);
 
-		//console.log(randomChordName);
+		//console.log(randomChordName); //DEBUG
 		//Get root, 3rd and 5th note.
 		var rootName = randomChord.Notes[0];
 		var root = NoteModel.getNoteWithName(rootName);
@@ -94,13 +102,31 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 				lowestYCoord = yCoord;
 			}
 			lowestYCoord = yCoord;
-			var accidential = currentNote.Accidential;
+			if(SettingService.isKeyUsedinChord()){
+				if(noteName == "Fx" || noteName == "Bbb" || noteName == "Cx")
+					var accidential = currentNote.Accidential;
+				else
+					var accidential = 'none';
+			}
+			else
+				var accidential = currentNote.Accidential;
 			var note = "<note value=" + noteName + " x=" + xCoord + " y=" + yCoord + " acc=" + accidential + "></note>";
 			result.push(note);
 		}
 
 		//Set correct answer here
-		_correctAnswerIndex = randomChordIndex;
+		if(SettingService.isKeyUsedinChord()){
+			var correctAnswerIndex = "";
+			for(var i = 0; i < _chordNameList.length; i++){
+				if(_chordNameList[i] == randomChordName){
+					correctAnswerIndex = i;
+					break;
+				}
+			}
+			_correctAnswerIndex = correctAnswerIndex;
+		}
+		else
+			_correctAnswerIndex = randomChordIndex;
 		GameControlService.setCorrectAnswer(randomChordName);
 		return result;
 	}
@@ -125,4 +151,11 @@ app.service('ChordService', function(NoteModel, GameControlService, SettingServi
 
 		return resultSet;
 	}
+
+	//Return key signature used for this question.
+	this.getKey = function(){
+		var key = "<key value=" + _keyUsed + " clef=" + _clefUsed + " ></key>";
+		return key;
+	}
+
 });

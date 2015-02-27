@@ -2,7 +2,7 @@
 Responsible for handling state of game, and construct extra UI element such as extra music bar.
 */
 
-app.service('GameControlService', function(){
+app.service('GameControlService', function(SettingService){
 
 	/****************************************
 	 *				 VARIABLES  			*
@@ -12,6 +12,9 @@ app.service('GameControlService', function(){
 	var _noteDuration = "";
 	var _clefUsed = "";
 	var _clefName = ["G", "F"];
+	var _keyUsed = "";
+	var _keyNameUsed = "";
+	var _keyName = ["C","G","D","A","E","B","Fs","Cs","F","Bb","Eb","Ab","Db","Gb"];
 	var _correctAnswer = "";
 	var _questionRespond = "";
 
@@ -33,10 +36,16 @@ app.service('GameControlService', function(){
 	 *				GAME CONTROL			*
 	 ****************************************/
 
-	//Pick a note duration and clef for the new question. Reset old correct answer and old respond.
-	this.gameStart = function(){
+	//Pick a note duration, clef and key signature for the new question. Reset old correct answer and old respond.
+	this.gameStart = function(category){
 		_noteDuration = _getRandomNoteDuration();
 		_clefUsed = _getRandomClef();
+		if(category == "Chord" && !SettingService.isKeyUsedinChord()){
+			_keyNameUsed = "C";
+		}
+		else
+			_keyNameUsed = _getKey();
+		_keyUsed = "<key value=" + _keyNameUsed + " clef=" + _clefUsed + " ></key>";
 		_correctAnswer = "";
 		var respond = angular.element(document.querySelector("respond"));
 		respond.remove();
@@ -45,6 +54,12 @@ app.service('GameControlService', function(){
 	//Get a random Clef.
 	var _getRandomClef = function(){
 		return _clefName[Math.floor(Math.random() * _clefName.length)];
+	}
+
+	//Get a key signature
+	var _getKey = function(){
+		return _keyName[Math.floor(Math.random() * _keyName.length)];
+		// return "Ab";
 	}
 
 	//Get a random note duration.
@@ -78,6 +93,16 @@ app.service('GameControlService', function(){
 	this.getClefUsed = function(){
 		return _clefUsed;
 	};
+
+	//Return key used.
+	this.getKeyUsed = function(){
+		return _keyUsed;
+	}
+	//return key name used.
+	this.getKeyNameUsed = function(){
+		return _keyNameUsed;
+	}
+
 	//Return question respond (UI element) to controller.
 	this.getQuestionRespond = function(){
 		return _questionRespond;

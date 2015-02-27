@@ -8,6 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="Style/ngDialog-theme-default.css" >
 		<link rel="stylesheet" type="text/css" href="Style/ngDialog.css" >
 		<link rel="stylesheet" type="text/css" href="Style/style.css" >
+		<link rel="stylesheet" type="text/css" href="Style/feedback.css" >
+		<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 		<script src="Scripts/Main.js"></script>
 		<script src="Scripts/ngDialog.js"></script>
 		<script src="Scripts/NoteModel.js"></script>
@@ -28,6 +30,7 @@
 				<div id="nextQuestion" ng-click='nextQuestion()' class='customBounce' ng-show='nextQuestionSwitch'></div>
 			</div>
 		</div>
+		<div id='feedbackTab' ng-click='openFeedback()'><h3>Feedback</h3></div>
 		<footer><small>Designed and created by Ryan Huynh. Copyright &copy; 2015.</small></footer>
 	</body>
 	<script>

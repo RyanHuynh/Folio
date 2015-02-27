@@ -162,6 +162,8 @@ app.service('NoteModel', function(){
 						Notes : ["Gb","Bbb","Db"] },
 						{ Name: "Gmin",
 						Notes : ["G","Bb","D"] },
+						{ Name: "Gsmin" ,
+						Notes : ["Gs","B","Ds"] },
 						{ Name: "Abmin",
 						Notes : ["Ab","Cb","Eb"] },
 						{ Name: "Amin",
@@ -197,7 +199,76 @@ app.service('NoteModel', function(){
 						{ Name: "BbM",
 						Notes: ["Bb","C","D","Eb","F","G","A"]},
 						{ Name: "FM",
-						Notes: ["F","G","A","Bb","C","D","E"]}];
+						Notes: ["F","G","A","Bb","C","D","E"]},
+
+						{ Name: "Cmin",
+						Notes: ["C","D","Eb","F","G","Ab","Bb"]},
+						{ Name: "Dmin",
+						Notes: ["D","E","F","G","A","Bb","C"]},
+						{ Name: "Emin",
+						Notes: ["E","Fs","G","A","B","C","D"]},
+						{ Name: "Fmin",
+						Notes: ["F","G","Ab","Bb","C","Db","Eb"]},
+						{ Name: "Gmin",
+						Notes: ["G","A","Bb","C","D","Eb","F"]},
+						{ Name: "Amin",
+						Notes: ["A","B","C","D","E","F","G"]},
+						{ Name: "Bmin",
+						Notes: ["B","Cs","D","E","F","G","A"]},
+						{ Name: "Csmin",
+						Notes: ["Cs","Ds","E","Fs","Gs","A","B"]},
+						{ Name: "Dsmin",
+						Notes: ["Ds","F","Fs","Gs","As","B","Cs"]},
+						{ Name: "Fsmin",
+						Notes: ["Fs","Gs","A","B","Cs","D","E"]},
+						{ Name: "Gsmin",
+						Notes: ["Gs","As","B","Cs","Ds","E","Fs"]},
+						{ Name: "Asmin",
+						Notes: ["As","C","Cs","Ds","F","Fs","Gs"]}];
+
+	//Key signature model
+	var _keyList = [{	Name: "C",
+						Notes: ["C","D","E","F","G","A","B"],
+						Chord:["CM","FM","GM","Dmin","Emin","Amin"] },
+					{	Name: "G",
+						Notes: ["C","D","E","Fs","G","A","B"],
+						Chord:["GM","CM","DM","Amin","Bmin","Emin"] },
+					{	Name: "D",
+						Notes: ["Cs","D","E","Fs","G","A","B"],
+						Chord:["DM","GM","AM","Emin","Fsmin","Bmin"] },
+					{	Name: "A",
+						Notes: ["Cs","D","E","Fs","Gs","A","B"],
+						Chord:["AM","DM","EM","Bmin","Csmin","Fsmin"] },
+					{	Name: "E",
+						Notes: ["Cs","Ds","E","Fs","Gs","A","B"],
+						Chord:["EM","AM","BM","Fsmin","Gsmin","Csmin"] },
+					{	Name: "B",
+						Notes: ["Cs","Ds","E","Fs","Gs","As","B"],
+						Chord:["BM","FsM","GsM","Csmin","Dsmin","Gsmin"] },
+					{	Name: "Fs",
+						Notes: ["Cs","Ds","Es","Fs","Gs","As","B"],
+						Chord:["FsM","BM","CsM","Gsmin","Asmin","Dsmin"] },
+					{	Name: "Cs", //NEED PICTURE
+						Notes: ["Cs","Ds","Es","Fs","Gs","As","Bs"],
+						Chord:["CsM","FsM","GsM","Dsmin","Asmin"] },
+					{	Name: "F",
+						Notes: ["C","D","E","F","G","A","Bb"],
+						Chord:["FM","BbM","CM","Gmin","Amin","Dmin"] },
+					{	Name: "Bb",
+						Notes: ["C","D","Eb","F","G","A","Bb"],
+						Chord:["BbM","EbM","FM","Cmin","Dmin","Gmin"] },
+					{	Name: "Eb",
+						Notes: ["C","D","Eb","F","G","Ab","Bb"],
+						Chord:["EbM","AbM","BbM","Fmin","Gmin","Cmin"] },
+					{	Name: "Ab",
+						Notes: ["C","Db","Eb","F","G","Ab","Bb"],
+						Chord:["AbM","DbM","EbM","Bbmin","Cmin","Fmin"] },
+					{	Name: "Db",
+						Notes: ["C","Db","Eb","F","Gb","Ab","Bb"],
+						Chord:["DbM","GbM","AbM","Ebmin","Fmin","Bbmin"] },
+					{	Name: "Gb",
+						Notes: ["Cb","Db","Eb","F","Gb","Ab","Bb"],
+						Chord:["GbM","DbM","Abmin","Bbmin","Ebmin"] }];
 
 	//Return Note with input name.
 	this.getNoteWithName = function(noteName){
@@ -237,6 +308,30 @@ app.service('NoteModel', function(){
 		}
 		return result;
 	};
+
+	//Return chord with scale/key
+	this.getChordInKey = function(keyName){
+		var result = [];
+		for(var i = 0; i < _keyList.length; i++){
+			if(_keyList[i].Name == keyName){
+				result = _keyList[i].Chord;
+				break;
+			}
+		}
+		return result;
+	}
+
+	//Get notes with key.
+	this.getNotesInKey = function(keyName){
+		var result = [];
+		for(var i = 0; i < _keyList.length; i++){
+			if(_keyList[i].Name == keyName){
+				result = _keyList[i].Notes;
+				break;
+			}
+		}
+		return result;
+	}
 });
 
 

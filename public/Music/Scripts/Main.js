@@ -4,8 +4,6 @@ var app = angular.module('myApp', ['ngDialog']);
  *			 MAIN CONTROLLER 		   	*
  ****************************************/
 app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNoteService, ChordService, ScaleService, GameControlService, SettingService){
-	
-	var _category = "Note";
 	$scope.nextQuestionSwitch = false;
 
 	//Check Answer respond and render respond to UI.
@@ -27,18 +25,19 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 	//Routine run for "Note" game mode.
 	var NameNoteRun = function(){
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
-
-		var note = NameNoteService.getQuestion();
-
-		//Get key signature used.
-		var key = NameNoteService.getKey();
-		questionBox.append($compile(key)($scope));
-		questionBox.append($compile(note)($scope));
-
+	
 		//Get clef used.
 		var clefUsed = GameControlService.getClefUsed();
 		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
 
+		//Get key signature used.
+		var key = GameControlService.getKeyUsed();
+		questionBox.append($compile(key)($scope));
+
+		//Get question .
+		var note = NameNoteService.getQuestion();
+		questionBox.append($compile(note)($scope));
+		
 		//Get answers for the question.
 		var answerSet = NameNoteService.getAnswerSet();
 		var answerBox = angular.element(document.querySelector('div[id=answerBox]'));
@@ -57,6 +56,10 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		//Get clef used.
 		var clefUsed = GameControlService.getClefUsed();
 		questionBox.css('background-image', 'url(img/Clef/' + clefUsed + '.jpg)' );
+
+		//Get key signature used.
+		var key = GameControlService.getKeyUsed();
+		questionBox.append($compile(key)($scope));
 
 		//Get question
 		var notes = ChordService.getQuestion();
@@ -111,20 +114,24 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		//Clear out the question box.
 		var questionBox = angular.element(document.querySelector('div[id=questionBox]'));
 		questionBox.children().remove();
-		GameControlService.gameStart();
-
-		//Random game mode for now.
+		
+		//Pick a question type base on choice in setting.
 		var questionType = SettingService.getQuestionType();
-		_category = questionType[Math.floor(Math.random() * questionType.length)];
-		if(_category == "Note")
+		var category = questionType[Math.floor(Math.random() * questionType.length)];
+
+		//Reset game state and start new one.
+		GameControlService.gameStart(category);
+
+		//Pick a question for question type.
+		if(category == "Note")
 			NameNoteRun();
-		else if(_category == "Chord")
+		else if(category == "Chord")
 			ChordRun();
 		else
 			ScaleRun();
 
 		//Add question text.
-		questionBox.append(GameControlService.getQuestionText(_category));
+		questionBox.append(GameControlService.getQuestionText(category));
 	};
 
 	//Open setting menu.
@@ -148,7 +155,25 @@ app.controller('mainCtrl', function($window, $scope,$compile, ngDialog, NameNote
 		$scope.nextQuestion();
 	});
 
+	//Open feedback tab.
+	$scope.openFeedback = function(){
+		ngDialog.open({
+			template : 'feedback.html',
+			className: 'ngdialog-theme-default feedback',
+			controller: 'feedbackCtrl'});
+	}
+	//First run.
 	$scope.nextQuestion();
+});
+app.controller('feedbackCtrl', function($http,$scope){
+	$scope.submitFeedback = function(){
+		console.log($scope.Feedback);
+		$http.post('/api/feedback/MusicBuddy', $scope.Feedback)
+			.success(function(res){
+				
+			});
+		$scope.closeThisDialog();
+	};
 });
 app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 	//Load setting back.
@@ -159,11 +184,16 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 
 	//Chord Setting
 	$scope.inversionChord = SettingService.isChordInverted();
+	$scope.chordWithKey = SettingService.isKeyUsedinChord();
+
+	//Scale Setting
+	$scope.randomNotePos = SettingService.isRandomNotePos();
 
 	//Apply setting
 	$scope.applySetting = function(){
 		SettingService.saveQuestionType($scope.noteType, $scope.chordType, $scope.scaleType);
-		SettingService.saveChordSetting($scope.inversionChord);
+		SettingService.saveChordSetting($scope.inversionChord,$scope.chordWithKey);
+		SettingService.saveScaleSetting($scope.randomNotePos);
 		$rootScope.$broadcast('settingApplied');
 	};
 
@@ -172,7 +202,9 @@ app.controller('settingCtrl', function($rootScope, $scope, SettingService){
 		$scope.noteType = true;
 		$scope.chordType = true;
 		$scope.scaleType = true;
-		$scope.inversionChord = true;
+		$scope.inversionChord = false;
+		$scope.chordWithKey = false;
+		$scope.randomNotePos = false;
 	};
 });
 /****************************************
@@ -213,12 +245,10 @@ app.directive('answer', function(GameControlService){
 	return {
 		link : function(scope, element, attrs){
 			element.css('background-image', 'url(img/Answer/' + attrs.type + "/" + attrs.value + '.png)');
-			//element.css('background-image', 'url(img/Answer/Note/test.png)');
 			element.bind('click', function(){
 				GameControlService.isCorrectAnswer(attrs.value);	
 				scope.checkRespond();
 				element.addClass('animated rotateOutDownLeft')
-				//element.addClass('animated hinge');;
 			});	
 
 		}

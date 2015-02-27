@@ -82,6 +82,29 @@ router.route('/submitMsg/')
 
 	});
 
+//Api for submit feedback
+router.route('/feedback/:appType')
+	.post(function(req, res){
+		var data = req.body;
+		var textSent = "Name: " + data.Name + "\nEmail: " + data.Email + "\nMessage: " + data.Message;
+
+		//Send mail
+		smtpTransport.sendMail({
+			transport: smtpTransport,
+			from: "The Mailman <dragonvzmisc@gmail.com>", // sender address.  Must be the same as authenticated user if using GMail.
+			to: "Ryan Huynh <chienhhuynh@gmail.com>", // receiver
+			subject: req.params.appType + 'Feedback', // subject
+			text: textSent // body
+		}, function(error, response){
+			if(error)
+				console.log(error);
+			else{
+				console.log("Feedback is sent: " + response.message);
+				res.json({ message: "Email is sent."});
+			}
+			smtpTransport.close();
+		});
+	});
 //Assign port for our app.
 app.listen(port);
 console.log('App is listening in port ' + port);
